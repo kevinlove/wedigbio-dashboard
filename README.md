@@ -1,10 +1,10 @@
 #WeDigBio Dashboard Features:
 
-*Maps of cumulative participant activity across project and events
-*Heat-map of collection localities transcribed
-*Stream of thumbnail images that have been transcribed 
-*Timeline of transcribed records by collection date
-*Leaderboard
+* Maps of cumulative participant activity across project and events
+* Heat-map of collection localities transcribed
+* Stream of thumbnail images that have been transcribed 
+* Timeline of transcribed records by collection date
+* Leaderboard
 
 
 
