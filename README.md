@@ -65,3 +65,42 @@ http://lesherbonautes.mnhn.fr/tuile/MNHN/P/P03218978/tile_0_0_0.jpg
 <labelCompleted>true</labelCompleted>
 </item>
 ```
+
+[Notes From Nature](https://api.zooniverse.org/projects/notes_from_nature)
+
+```javascript
+{
+id: "511410da3ae740c3ec000001",
+activated_subjects_at: "2015-08-10T20:00:24Z",
+bucket: "zooniverse-static",
+bucket_path: "www.notesfromnature.org",
+classification_count: 822452,
+complete_count: 158551,
+created_at: "2013-04-18T18:34:27Z",
+display_name: "Notes From Nature",
+groups: {
+5170103b3ae74027cf000002: {
+classification_count: 243275
+},
+517010563ae74027d3000002: {
+classification_count: 481486
+},
+520903d03ae740842f000002: {
+classification_count: 13954,
+rows_transcribed: 337327
+},
+5266c83a3ae740d5e3000002: {
+classification_count: 81767
+},
+55ada648469d922927000002: {
+classification_count: 1970
+}
+},
+name: "notes_from_nature",
+site_prefix: "NN",
+updated_at: "2013-04-18T18:34:27Z",
+user_count: 7881,
+workflow_name: "primary",
+zooniverse_id: 22
+}
+```
