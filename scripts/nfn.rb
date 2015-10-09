@@ -36,8 +36,11 @@ begin
           when "Scientific name"
             transcribed_species = ann["value"]
         end
-        values.push("('#{id}','#{project}','#{user_id}','#{user_ip_address}','#{subject_id}','#{specimen_url}','#{specimen_image_url}','#{transcription_timestamp}','#{transcribed_country}','#{transcribed_state}','#{transcribed_county}','#{transcribed_species}', '#{Time.now.to_s}')")
+        if ann.has_key? "group"
+          project = "NFN - #{ann["group"]["name"]}"
+        end
       end
+      values.push("('#{id}','#{project}','#{user_id}','#{user_ip_address}','#{subject_id}','#{specimen_url}','#{specimen_image_url}','#{transcription_timestamp}','#{transcribed_country}','#{transcribed_state}','#{transcribed_county}','#{transcribed_species}', '#{Time.now.to_s}')")
     end
   end
   cartodb = CartoDB.new(table_name)
