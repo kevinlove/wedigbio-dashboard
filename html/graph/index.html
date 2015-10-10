@@ -12,16 +12,21 @@
     <script>
         AmCharts.makeChart("chartdiv", {
             type: "serial",
+            titles: [{
+                size: 15,
+                text: "WeDigBio Total Transcriptions Per Hour"
+            }],
             fontSize: 12,
             marginTop: 10,
             categoryField: 'hour',
             categoryAxis: {
                 gridAlpha: 0.07,
                 axisColor: "#DADADA",
-                startOnAxis: true
+                startOnAxis: true,
+                title: "Hours elapsed"
             },
             chartCursor: {
-                cursorAlpha: 0
+                cursorAlpha: 1
             },
             responsive: {enabled: true},
             svgIcons: false,
@@ -30,9 +35,18 @@
                 dragIcon: "dragIconRoundSmall.png"
             },
             valueAxes: [{
+                id: "a1",
                 stackType: "regular",
                 gridAlpha: 0.07,
+                position: 'right',
                 title: "Number of Transcriptions"
+            }, {
+                id: 'a2',
+                gridAlpha: 0.07,
+                stackType: "regular",
+                position: "left",
+                title: "Number of Transcriptions",
+                includeHidden: true
             }],
             "dataLoader": {
                 "url": "wedigbio.csv",
@@ -40,6 +54,7 @@
                 "showErrors": true,
                 "postProcess": function (data, config, chart) {
                     var graphs = []
+                            , hidden_graphs = []
                       , chartData = []
                       , current_hour;
 
@@ -58,28 +73,42 @@
                         }
                             obj[collection] = count;
                     }
-
-                    for (col in chartData[0]){
+                    for (var col in chartData[0]){
                         if (col != "hour"){
                             graphs.push({
+                                valueAxis: "a1",
                                 type: "line",
                                 title: col,
                                 lineAlpha: 0,
                                 valueField: col,
                                 fillAlphas: 0.6,
-                                baloonText: "<span>[[col]]</span><span style='font-size:14px; color:#000000;'><b>[[collection]][[total]]</b></span>"
+                                balloonText: "[[value]] out of [[total]] total"
+                            })
+
+                            hidden_graphs.push({
+                                valueAxis: "a2",
+                                type: "line",
+                                title: col,
+                                hidden: false,
+                                visibleInLegend:false,
+                                categoryBalloonAlpha: 0,
+//                                cursorAlpha: 0,
+                                lineAlpha: 0,
+                                lineColor: '',
+                                valueField: col,
+                                fillAlphas: 0,
+                                balloonText: ""
                             })
                         }
                     }
-
-                    chart.graphs = graphs;
+                    chart.graphs = graphs.concat(hidden_graphs);
                     return chartData;
                 }
             },
             legend: {
                 position: "bottom",
                 labelText: "[[title]]",
-                valueText: "Total: [[value]]",
+                valueText: "Total: [[value]] of [[total]] total",
                 valueWidth: 100,
                 valueAlign: "left",
                 equalWidths: false,
