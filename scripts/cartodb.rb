@@ -9,6 +9,7 @@ class CartoDB
 
   def initialize(table)
     @table = table
+    ###This is an old API KEY, update with new key for production###
     @api_key = "fe61d32b4352583a0abdf3e0fab25bf8cb7c7272"
     @api_url = "https://nfn.cartodb.com/api/v2/sql"
   end
