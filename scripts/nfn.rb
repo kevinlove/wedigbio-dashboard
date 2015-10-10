@@ -7,7 +7,7 @@ begin
   values = []
   #time for zooniverse url MM-DD-HH (last hour)
   url_time = Time.now.strftime('%m-%d-') + (Time.now.hour - 1).to_s.rjust(2, "0")
-  nfn_url = "ZOONIVERSE HOURLY URL GOES HERE"
+  nfn_url = "http://zooniverse-data.s3.amazonaws.com/project_data/notes_from_nature/hourly_dumps/#{url_time}.json"
 
   open(nfn_url) do |nfn|
     nfn.each_line do |line|
@@ -27,6 +27,7 @@ begin
       transcribed_species = ""
       obj["annotations"].each do |ann|
         case ann["step"]
+          
           when "State/Province"
             transcribed_state = ann["value"]
           when "Country"
@@ -40,7 +41,22 @@ begin
           project = "NFN - #{ann["group"]["name"]}"
         end
       end
-      values.push("('#{id}','#{project}','#{user_id}','#{user_ip_address}','#{subject_id}','#{specimen_url}','#{specimen_image_url}','#{transcription_timestamp}','#{transcribed_country}','#{transcribed_state}','#{transcribed_county}','#{transcribed_species}', '#{Time.now.to_s}')")
+      values.push([
+                      id,
+                      project,
+                      user_id,
+                      user_ip_address,
+                      subject_id,
+                      specimen_url,
+                      specimen_image_url,
+                      transcription_timestamp,
+                      transcribed_country,
+                      transcribed_state,
+                      transcribed_county,
+                      transcribed_species,
+                      Time.now.to_s
+                  ])
+      #values.push("('#{id}','#{project}','#{user_id}','#{user_ip_address}','#{subject_id}','#{specimen_url}','#{specimen_image_url}','#{transcription_timestamp}','#{transcribed_country}','#{transcribed_state}','#{transcribed_county}','#{transcribed_species}', '#{Time.now.to_s}')")
     end
   end
   cartodb = CartoDB.new(table_name)
