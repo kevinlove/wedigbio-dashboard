@@ -8,13 +8,12 @@ begin
   #time for zooniverse url MM-DD-HH (last hour)
   url_time = Time.now.strftime('%m-%d-') + (Time.now.hour - 1).to_s.rjust(2, "0")
   nfn_url = "http://zooniverse-data.s3.amazonaws.com/project_data/notes_from_nature/hourly_dumps/#{url_time}.json"
-  transcription_center = "Notes from Nature"
 
   open(nfn_url) do |nfn|
     nfn.each_line do |line|
       obj = JSON.parse(line)
       subject = obj["subjects"].first
-      transcription_id = obj["_id"]["$oid"]
+      id = obj["_id"]["$oid"]
       project = "Notes from Nature"
       user_id = obj["user_id"] ? obj["user_id"]["$oid"] : ""
       user_ip_address = obj["user_ip"]
@@ -43,8 +42,7 @@ begin
         end
       end
       values.push([
-                      transcription_id,
-                      transcription_center,
+                      id,
                       project,
                       user_id,
                       user_ip_address,
