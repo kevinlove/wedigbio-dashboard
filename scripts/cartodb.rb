@@ -62,18 +62,32 @@ class CartoDB
   def get_totals
     start = Time.new(2015,10,8,23,50,0,"-04:00")
     csv = "wedigbio.csv"
-    params = {
-        "q" => "SELECT project_name, Count(project_name) FROM #{@table} GROUP BY project_name;",
-        "api_key" => @api_key }
-    uri = URI.parse(@api_url)
-    projects_response = Net::HTTP.post_form(uri, params)
-    json = JSON.parse(projects_response.body)
+    query = "SELECT project_name, Count(project_name) FROM #{@table} GROUP BY project_name;"
+    json = self.select(query)
     if json["rows"] && json["rows"].length > 0
       hours_elapsed = (Time.now - start)/60/60
       CSV.open(csv, 'ab') do |file|
         json["rows"].each{ |row| file << [ row["project_name"], row["count"], hours_elapsed.round ] }
       end
     end
+  end
+
+  def get_last_timestamp transcription_center
+    query = "SELECT transcription_timestamp FROM #{@table} WHERE transcription_center = #{transcription_center} ORDER BY transcription_timestamp desc limit 1"
+    json = self.select(query)
+    if json["rows"] && json["rows"].length > 0
+      return Time.parse(json["rows"][0]["transcription_timestamp"])
+    else
+      return Time.new("")
+    end
+  end
+
+  def select query
+    params = { "q" => query,
+               "api_key" => @api_key }
+    uri = URI.parse(@api_url + "?" + URI.encode_www_form(params))
+    response = Net::HTTP.get_response(uri)
+    return JSON.parse(response.body)
   end
 
 end
