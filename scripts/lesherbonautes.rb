@@ -8,7 +8,7 @@ begin
   transcription_center = "Les Herbonautes"
   values = []
   cartodb = CartoDB.new (table_name)
-  last_timestamp = cartodb.get_last_timestamp(transcription_center)
+  last_timestamp = cartodb.get_last_timestamp({"transcription_center" => transcription_center})
   doc = Nokogiri::XML(open(feed))
   doc.xpath('//item').each do |item|
     time = Time.parse(item.css("pubDate").text)

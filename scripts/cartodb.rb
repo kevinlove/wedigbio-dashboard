@@ -72,8 +72,9 @@ class CartoDB
     end
   end
 
-  def get_last_timestamp transcription_center
-    query = "SELECT transcription_timestamp FROM #{@table} WHERE transcription_center = #{transcription_center} ORDER BY transcription_timestamp desc limit 1"
+  def get_last_timestamp where
+    wheres = where.inject([]){|mem, (key, value)| mem.push("#{key} = '#{value}'") }
+    query = "SELECT transcription_timestamp FROM #{@table} WHERE #{wheres.join(" and ")} ORDER BY transcription_timestamp desc limit 1"
     json = self.select(query)
     if json["rows"] && json["rows"].length > 0
       return Time.parse(json["rows"][0]["transcription_timestamp"])
