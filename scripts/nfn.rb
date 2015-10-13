@@ -6,7 +6,7 @@ begin
   table_name = "wdb"
   values = []
   #time for zooniverse url MM-DD-HH (last hour)
-  url_time = Time.now.strftime('%m-%d-') + (Time.now.hour - 1).to_s.rjust(2, "0")
+  url_time = (Time.now - 60*60).strftime('%m-%d-%H')
   nfn_url = "http://zooniverse-data.s3.amazonaws.com/project_data/notes_from_nature/hourly_dumps/#{url_time}.json"
   transcription_center = "Notes from Nature"
 
@@ -27,8 +27,7 @@ begin
       transcribed_county = ""
       transcribed_species = ""
       obj["annotations"].each do |ann|
-        case ann["step"]
-          
+        case ann["step"]          
           when "State/Province"
             transcribed_state = ann["value"]
           when "Country"
