@@ -15,7 +15,7 @@ begin
     last_timestamp = Time.new("")
     last_timestamp = cartodb.get_last_timestamp({ "transcription_center" => transcription_center,
                                                   "project_name" => project})
-    uri      = URI.parse(url + "?days=50&format=json&limit=5000")
+    uri      = URI.parse(url + "?days=2&format=json&limit=5000")
     response = JSON.parse(Net::HTTP.get_response(uri).body)
 
     if response["channel"]["item"]
@@ -55,6 +55,6 @@ begin
       cartodb.insert values
     end
   end
-rescue StandardError => e
+rescue
 
 end
