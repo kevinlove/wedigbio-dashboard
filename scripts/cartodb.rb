@@ -72,6 +72,20 @@ class CartoDB
     end
   end
 
+
+  def get_totals_by field
+    start = Time.new(2015,10,12,23,50,0,"-04:00")
+    csv = "wedigbio_#{field}.csv"
+    query = "SELECT #{field}, Count(#{field}) FROM #{@table} GROUP BY #{field};"
+    json = self.select(query)
+    if json["rows"] && json["rows"].length > 0
+      hours_elapsed = (Time.now - start)/60/60
+      CSV.open(csv, 'ab') do |file|
+        json["rows"].each{ |row| file << [ row[field], row["count"], hours_elapsed.round ] }
+      end
+    end
+  end
+
   def get_last_timestamp where
     wheres = where.inject([]){|mem, (key, value)| mem.push("#{key} = '#{value}'") }
     query = "SELECT transcription_timestamp FROM #{@table} WHERE #{wheres.join(" and ")} ORDER BY transcription_timestamp desc limit 1"
