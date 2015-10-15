@@ -5,7 +5,7 @@ require_relative 'constants'
 
 
 begin
-  table_name = "lesherb"
+  table_name = TABLE_NAME
   feed = "http://lesherbonautes.mnhn.fr/contributions/last/days/1/rss"
   transcription_center = "Les Herbonautes"
   values = []
