@@ -4,7 +4,7 @@ require 'json'
 require 'open-uri'
 
 begin
-  table_name = "wdb"
+  table_name = TABLE_NAME
   values = []
   #time for zooniverse url MM-DD-HH (last hour)
   url_time = (Time.now - 60*60).strftime('%m-%d-%H')
