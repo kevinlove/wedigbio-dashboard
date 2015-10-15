@@ -1,9 +1,9 @@
 require_relative 'cartodb'
+require_relative 'constants'
 require 'json'
 require 'open-uri'
 
 begin
-  table_name = 'digivol'
   transcription_center = 'DigiVol'
   digivol_url = "http://volunteer-dev.ala.org.au/ws/wedigbio"
   response = open(digivol_url).read
@@ -40,7 +40,7 @@ begin
                       Time.now.to_s
                   ])
     end
-    cartodb = CartoDB.new table_name
+    cartodb = CartoDB.new TABLE_NAME
     cartodb.insert values
   end
 rescue

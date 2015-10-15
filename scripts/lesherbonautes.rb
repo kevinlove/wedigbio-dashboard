@@ -1,6 +1,8 @@
 require 'nokogiri'
 require 'open-uri'
 require_relative 'cartodb'
+require_relative 'constants'
+
 
 begin
   table_name = "lesherb"

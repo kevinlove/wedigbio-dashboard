@@ -1,4 +1,5 @@
 require_relative 'cartodb'
+require_relative 'constants'
 require 'json'
 require 'open-uri'
 
@@ -27,7 +28,8 @@ begin
       transcribed_county = ""
       transcribed_species = ""
       obj["annotations"].each do |ann|
-        case ann["step"]          
+        case ann["step"]
+
           when "State/Province"
             transcribed_state = ann["value"]
           when "Country"

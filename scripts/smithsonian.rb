@@ -1,14 +1,15 @@
 require_relative 'cartodb'
+require_relative 'constants'
 require 'json'
 require 'open-uri'
 
+
 begin
-  table_name = "smithsonian"
   transcription_center = "Smithsonian"
   url_date = (Time.now - 60*60*24).strftime '%B%d%Y'
   smithsonian_url = "https://transcription.si.edu/json/#{url_date}TransGeo.json"
-  username = ""
-  password = ""
+  username = SMITH_USER
+  password = SMITH_PASS
   response = open(smithsonian_url, http_basic_authentication: [username,password]).read
   values = []
   unless response.empty?
@@ -44,7 +45,7 @@ begin
                       Time.now.to_s
                   ])
     end
-    cartodb = CartoDB.new table_name
+    cartodb = CartoDB.new TABLE_NAME
     cartodb.insert values
   end
 rescue

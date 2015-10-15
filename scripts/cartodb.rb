@@ -2,6 +2,8 @@ require 'json'
 require 'net/http'
 require 'open-uri'
 require 'csv'
+require_relative 'constants'
+
 
 class CartoDB
 
@@ -9,9 +11,8 @@ class CartoDB
 
   def initialize(table)
     @table = table
-    ###This is an old API KEY, update with new key for production###
-    @api_key = "fe61d32b4352583a0abdf3e0fab25bf8cb7c7272"
-    @api_url = "http://nfn.cartodb.com/api/v2/sql"
+    @api_key = API_KEY
+    @api_url = API_URL
   end
 
 
@@ -19,7 +20,7 @@ class CartoDB
     ##################
     #Order of values must be: [
     #     transcription_id,
-    #     transcription_center,
+    #     transcription_center
     #     project,
     #     user_id,
     #     user_ip_address,
@@ -33,7 +34,7 @@ class CartoDB
     #     transcribed_species,
     #     Time.now.to_s
     # ]
-    ######################
+    ######################sud
     begin_sql = "INSERT INTO #{@table} (transcription_id, transcription_center, project_name, user_id, user_ip, subject_id, specimen_url, specimen_image_url, transcription_timestamp, transcribed_country, transcribed_state, transcribed_county, transcribed_species, upload_timestamp)"
     values.map!{ |row| "('" + row.map{ |r| r.gsub("'","") }.join("','") + "')" }
     params = {
@@ -71,7 +72,6 @@ class CartoDB
       end
     end
   end
-
 
   def get_totals_by field
     start = Time.new(2015,10,12,23,50,0,"-04:00")
