@@ -29,14 +29,14 @@ class CartoDB
     #     specimen_image_url,
     #     transcription_timestamp,
     #     transcribed_country,
-    #     transcribed_state,
+    #     transcribed_state,""
     #     transcribed_county,
     #     transcribed_species,
     #     Time.now.to_s
     # ]
     ######################sud
     begin_sql = "INSERT INTO #{@table} (transcription_id, transcription_center, project_name, user_id, user_ip, subject_id, specimen_url, specimen_image_url, transcription_timestamp, transcribed_country, transcribed_state, transcribed_county, transcribed_species, upload_timestamp)"
-    values.map!{ |row| "('" + row.map{ |r| r.gsub("'","") }.join("','") + "')" }
+    values.map!{ |row| "('" + row.map{ |r| r.gsub("'","") if r.is_a? String }.join("','") + "')" }
     params = {
         "q"       => begin_sql + " values " + values.join(","),
         "api_key" => @api_key }
