@@ -71,7 +71,7 @@ class CartoDB
   end
 
   def get_totals_by field
-    start = Time.new(2015,10,12,23,50,0,"-04:00")
+    start = START_TIME
     csv = "wedigbio_#{field}.csv"
     query = "SELECT #{field}, Count(#{field}) FROM #{@table} GROUP BY #{field};"
     json = self.select(query)
