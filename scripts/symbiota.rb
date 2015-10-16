@@ -3,7 +3,7 @@ require 'net/http'
 require_relative 'cartodb'
 require_relative 'constants'
 
-# if Time.now > START_TIME
+if Time.now > START_TIME
   begin
     transcription_center = "Symbiota"
     urls = { "Symbiota - Bryophyte" => "http://bryophyteportal.org/portal/webservices/dataentryactivity.php",
@@ -27,7 +27,7 @@ require_relative 'constants'
           transcription_id = ""
           user_id = item["creator"].empty? ? "" : item["creator"]
           user_ip_address = ""
-          subject_id = ""
+          subject_id = "" 
           specimen_url = item["link"].to_s
           specimen_image_url = item["thumbnailUri"].to_s
           transcription_timestamp = time
@@ -93,4 +93,4 @@ require_relative 'constants'
   rescue StandardError => e
     p e.to_s
   end
-# end
+end
