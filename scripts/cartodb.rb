@@ -4,10 +4,7 @@ require 'open-uri'
 require 'csv'
 require_relative 'constants'
 
-
 class CartoDB
-
-
 
   def initialize(table)
     @table = table
