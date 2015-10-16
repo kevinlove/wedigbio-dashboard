@@ -74,8 +74,12 @@
               current_hour = hour;
               obj["hour"] = hour;
             }
-            obj[collection] = count;
-            if (i+1 == data.length) chartData.push(obj) //make sure we push last item
+            if (typeof(count) != 'undefined'){
+              obj[collection] = count;
+            }
+            if (i+1 == data.length && typeof(obj["hour"] != 'undefined')) {
+              chartData.push(obj)
+            } //make sure we push last item if it's there
           }
 
           /////////////////////////////////////
