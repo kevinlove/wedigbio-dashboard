@@ -6,7 +6,7 @@ require 'open-uri'
 if Time.now > START_TIME
   begin
     transcription_center = 'DigiVol'
-    digivol_url = "http://volunteer-dev.ala.org.au/ws/wedigbio"
+    digivol_url = "http://volunteer.ala.org.au/ws/wedigbio"
     response = open(digivol_url).read
     values = []
     unless response.empty?
