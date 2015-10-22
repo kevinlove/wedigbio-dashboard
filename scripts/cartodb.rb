@@ -10,6 +10,7 @@ class CartoDB
     @table = table
     @api_key = API_KEY
     @api_url = API_URL
+    @upload_timestamp_threshold = '2015-10-22'
   end
 
 
@@ -58,9 +59,10 @@ class CartoDB
 
 
   def get_totals
-    start = Time.new(2015,10,8,23,50,0,"-04:00")
+    start = START_TIME
     csv = "wedigbio.csv"
-    query = "SELECT project_name, Count(project_name) FROM #{@table} GROUP BY project_name;"
+    #query = "SELECT project_name, Count(project_name) FROM #{@table} GROUP BY project_name;"
+    query = "SELECT project_name, Count(project_name) FROM #{@table} WHERE upload_timestamp > '#{@upload_timestamp_threshold}' GROUP BY project_name;"
     json = self.select(query)
     if json["rows"] && json["rows"].length > 0
       hours_elapsed = (Time.now - start)/60/60
@@ -73,7 +75,8 @@ class CartoDB
   def get_totals_by field
     start = START_TIME
     csv = "wedigbio_#{field}.csv"
-    query = "SELECT #{field}, Count(#{field}) FROM #{@table} GROUP BY #{field};"
+    #query = "SELECT #{field}, Count(#{field}) FROM #{@table} GROUP BY #{field};"
+    query = "SELECT #{field}, Count(#{field}) FROM #{@table} WHERE upload_timestamp > '#{@upload_timestamp_threshold}' GROUP BY #{field};"
     json = self.select(query)
     if json["rows"] && json["rows"].length > 0
       hours_elapsed = (Time.now - start)/60/60
